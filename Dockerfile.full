@@ -1,4 +1,4 @@
-FROM blang/latex:ctanbasic
-MAINTAINER Benedikt Lang <mail@blang.io>
+FROM 0000matteo0000/latex:ctanbasic
+MAINTAINER Matteo Porta <matteo.sid@hotmail.it>
 
 RUN tlmgr install scheme-full
