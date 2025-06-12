@@ -1,12 +1,12 @@
 FROM ubuntu:latest
-MAINTAINER Matteo Porta <matteo.sid@hotmail.it>
-ENV DEBIAN_FRONTEND noninteractive
+LABEL org.opencontainers.image.authors="0000matteo0000 Matteo Porta <matteo.sid@hotmail.it>"
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -q && apt-get install -qy \
     texlive-full \
     python3-pygments gnuplot \
-    make git \
-    && rm -rf /var/lib/apt/lists/*
+    make git && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /data
 VOLUME ["/data"]
