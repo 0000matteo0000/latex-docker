@@ -6,15 +6,15 @@ RUN apt-get update -q && \
     apt-get install -qy build-essential wget libfontconfig1 && \
     rm -rf /var/lib/apt/lists/*
 
-# Install TexLive with scheme-basic
-RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-    mkdir /install-tl-unx && \
-    tar -xvf install-tl-unx.tar.gz -C /install-tl-unx --strip-components=1 && \
-    echo "selected_scheme scheme-basic" >>/install-tl-unx/texlive.profile && \
-    /install-tl-unx/install-tl -profile /install-tl-unx/texlive.profile && \
-    rm -r /install-tl-unx && \
-    rm install-tl-unx.tar.gz
-ENV PATH="/usr/local/texlive/2022/bin/x86_64-linux:${PATH}"
+# Install TexLive with scheme-simple
+# switching from basic to simple because basic does not include tlmgr anymore
+RUN wget "http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"; \
+    mkdir -p "/install-tl-unx"; \
+    tar -xvf "install-tl-unx.tar.gz" -C "/install-tl-unx" --strip-components=1; \
+    "/install-tl-unx/install-tl" -no-interaction -scheme "simple" -texdir "/usr/local/texlive/" -texuserdir "$HOME/.texlive/"; \
+    rm -rf "/install-tl-unx"; \
+    rm -f "install-tl-unx.tar.gz"
+ENV PATH="/usr/local/texlive/bin/x86_64-linux:${PATH}"
 
 ENV HOME=/data
 WORKDIR /data
